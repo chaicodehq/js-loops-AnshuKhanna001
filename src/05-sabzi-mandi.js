@@ -31,4 +31,34 @@
  */
 export function sabziMandiBill(shoppingList, priceList) {
   // Your code here
+  let items = [];
+  let total = 0;
+  if (
+    !Array.isArray(shoppingList) ||
+    shoppingList.length === 0 ||
+    Object.keys(priceList).length === 0
+  )
+    return { items: [], totalBill: 0 };
+
+  for (const item of shoppingList) {
+    let { name, qty } = item;
+    if (!String(item.name).localeCompare(priceList.name)) {
+      continue;
+    }
+
+    if (!priceList.hasOwnProperty(name)) continue;
+
+    let pricePerKg = priceList[name];
+    if (pricePerKg > 80) continue;
+
+    const cost = pricePerKg * qty;
+    total += cost;
+
+    items.push({
+      name,
+      qty,
+      cost,
+    });
+  }
+  return { items, totalBill: total };
 }
